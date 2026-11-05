@@ -23,10 +23,10 @@
           <el-divider direction="vertical" />
           <el-color-picker v-model="backgroundColor" />
         </el-form-item>
-        <el-form-item v-if="!isRasterLogo">
+        <el-form-item>
           <el-checkbox
             v-model="inverseLogoColor"
-            label="Inverse logo colors"
+            :label="isRasterLogo ? 'Inverse circle colors' : 'Inverse logo colors'"
             size="large"
             border
           />
@@ -86,22 +86,19 @@
         >
           <svg v-html="preview" />
           <circle
-            v-if="!isRasterLogo"
+            v-if="isRasterLogo"
+            :fill="logoBackgroundColor"
+            :cx="size / 2"
+            :cy="size / 2"
+            :r="(size * logoScale) / 2 + 14"
+          />
+          <circle
             :fill="logoBackgroundColor"
             stroke-width="6px"
             :stroke="logoColor"
             :cx="size / 2"
             :cy="size / 2"
             :r="(size * logoScale) / 2 + 8"
-          />
-          <rect
-            v-if="isRasterLogo"
-            :x="rasterLogoX - 6"
-            :y="rasterLogoY - 6"
-            :width="size * logoScale + 12"
-            :height="size * logoScale + 12"
-            rx="4"
-            :fill="backgroundColor"
           />
           <image
             v-if="isRasterLogo"
@@ -151,7 +148,6 @@ import {
   ElRadioGroup,
   ElSelect,
   ElSpace,
-  ElTooltip,
 } from "element-plus";
 import { Download } from "@element-plus/icons-vue";
 import { saveAs } from "file-saver";
@@ -179,8 +175,8 @@ const presets = [
     backgroundColor: "#FFFFFF",
     padding: true,
     paddingModules: 4,
-    inverseLogoColor: false,
-    logoScale: 0.22,
+    inverseLogoColor: true,
+    logoScale: 0.33,
     ecl: "H",
     logoSource: edropLogo,
   },
@@ -191,8 +187,8 @@ const presets = [
     backgroundColor: "#FFFFFF",
     padding: true,
     paddingModules: 4,
-    inverseLogoColor: false,
-    logoScale: 0.22,
+    inverseLogoColor: true,
+    logoScale: 0.33,
     ecl: "H",
     logoSource: nowasteLogo,
   },
@@ -216,7 +212,6 @@ export default {
     ElRadioGroup,
     ElSelect,
     ElSpace,
-    ElTooltip,
     Download,
   },
   directives: { loading: ElLoading.directive },
