@@ -16,13 +16,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="Data for QR">
-          <el-tooltip
-            effect="dark"
-            content="You GitHub name or link to profile/repository"
-            placement="top-start"
-          >
-            <el-input v-model="message" clearable />
-          </el-tooltip>
+          <el-input v-model="message" clearable />
         </el-form-item>
         <el-form-item label="Colors">
           <el-color-picker v-model="color" />
